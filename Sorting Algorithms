@@ -1,0 +1,163 @@
+
+// Bubble sort : In this aglorithm, traverse from left and compare adjacent element and the higher one is placed at right side
+public class bubble{
+    public static void main (String arg[]){
+        int [] arr = {4,3,7,1,5};
+        int n = arr.length;
+        bubblesort(arr,n);
+        System.out.print(Arrays.toString(arr));
+    }
+    public static void bubblesort(int [] arr,int n){
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n-i-1;j++){
+                if(arr[j] < arr[j+1]){
+                    int temp = arr[j];
+                    arr[j] = arr[j+1];
+                    arr[j+1] = temp;
+                }
+            }
+        }
+    }
+}
+
+//Insertion sort : Insertion sort is a sorting algorithm that palce an unsorted element at its suitable place in each iteration
+
+public class insertion{
+    public static void main (String arg[]){
+        int [] arr = {4,3,7,1,5};
+        int n = arr.length;
+        insertionsort(arr,n);
+        System.out.print(Arrays.toString(arr));
+    }
+    
+    public static void insertionsort(int [] arr,int n){
+        for(int i=0;i<n-1;i++){
+            for(int j=i+1;j>0;j--){
+                if(arr[j] < arr[j-1]){
+                    int temp = arr[j-1];
+                    arr[j-1] = arr[j];
+                    arr[j] = temp;
+                }else{
+                    break;
+                }
+            }
+        }
+    }
+}
+
+//Selection Sort : It works by taking the smallest element in an unsorted array and bring it to the front.
+
+public class selection{
+    public static void main (String arg[]){
+        int [] arr = {4,3,7,1,5};
+        int n = arr.length;
+        selectionsort(arr,n);
+        System.out.print(Arrays.toString(arr));
+    }
+    
+    public static void selectionsort(int [] arr,int n){
+        for(int i=0;i<n;i++){
+            int min=i;
+            for(int j=i+1;j<n;j++){
+                if(arr[j] < arr[min]){
+                    min = j;
+                }
+            }if(min != i){
+                int temp = arr[i];
+                arr[i] = arr[min];
+                arr[min] = temp;                   
+            }
+        }
+    }
+}
+
+
+//QuickSort : It is a divde and conquer algorithm. It works by selecting a "piovt" element from the array and partitioning the other element into two sub-array.
+
+public class Quick{
+    public static void main (String arg[]){
+        int [] arr = {4,3,7,1,5};
+        int n = arr.length;
+        quicksort(arr,0,n-1);
+        System.out.print(Arrays.toString(arr));
+    }
+    
+    public static void quicksort(int [] nums,int low,int high){
+        if(low >= high){
+            return;
+        }
+        int s = low;
+        int e = high;
+        int m = s +(e-s)/2;
+        int pivot = nums[m];
+        
+        while(s<=e){
+            while(nums[s] < pivot){
+                s++;
+            }
+            while(nums[e] > pivot){
+                e--;
+            }
+            if(s<=e){
+                int temp = nums[s];
+                nums[s] = nums[e];
+                nums[e] = temp;
+                s++;
+                e--;
+            }
+        }
+        quicksort(nums,low,e);
+        quicksort(nums,s,high);
+    }
+}
+
+//MergeSort : It is a divde and conquer algorithm.
+
+public class Merge{
+    public static void main (String arg[]){
+        int [] arr = {4,3,7,1,5};
+        int n = arr.length;
+        
+        System.out.print(Arrays.toString(mergesort(arr)));
+    }
+    
+    public static int [] mergesort(int [] arr){
+        if(arr.length == 1){
+            return arr;
+        }
+        int mid = arr.length/2;
+        int[] left = mergesort(Arrays.copyOfRange(arr,0,mid));
+        int[] right = mergesort(Arrays.copyOfRange(arr,mid,arr.length));
+        return merge(left,right);
+    }
+    
+    public static int[] merge(int [] first,int [] second){
+        int [] mix = new int[first.length + second.length];
+        
+        int i=0;
+        int j=0;
+        int k=0;
+        
+        while(i<first.length && j<second.length){
+            if(first[i] < second[j]){
+                mix[k] = first[i];
+                i++;
+            }else{
+                mix[k] = second[j];
+                j++;
+            }
+            k++;
+        }
+        while(i<first.length){
+            mix[k] = first[i];
+            i++;
+            k++;
+        }
+        while(j<second.length){
+            mix[k] = second[j];
+            j++;
+            k++;
+        }
+        return mix;
+    }
+}
