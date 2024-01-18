@@ -1,0 +1,218 @@
+public class LL {
+    private class Node {
+        private int val;
+        private Node next;
+
+        public Node(int val) {
+            this.val = val;
+        }
+
+        public Node(int val, Node next) {
+            this.val = val;
+            this.next = next;
+        }
+    }
+    
+    private Node head;
+    private Node tail;
+    
+    private int size;
+    
+    public LL(){
+        this.size =0;
+    }
+    
+    public void insert(int val){
+        Node node = new Node(val);
+        node.next = head;
+        head = node;
+        
+        if(tail == null){
+            tail = head;
+        }
+        size++;
+    }
+    
+    public void last(int val){
+        if(tail == null){
+            insert(val);
+            return;
+        }
+        Node node = new Node(val);
+        Node temp = head;
+        while(temp.next != null){
+            temp=temp.next;
+        }
+        temp.next = node;
+        size++;
+    }
+    public void inbetween(int val,int index){
+        if(index == 0){ 
+            insert(val);
+            return;
+        }
+        if(index == size){
+            last(val);
+            return;
+        }
+        Node temp = head;
+        for(int i=1;i<index;i++){
+            temp=temp.next;
+        }
+        Node node = new Node(val,temp.next);
+        temp.next = node;
+        size++;
+    }
+    
+    public void deletefirst(){
+        head=head.next;
+        if(head==null){
+            tail=null;
+        }
+        size--;
+    }
+    
+    public void deletelast(){
+        if(size == 1){
+            deletefirst();
+        }
+        Node secondLast = get(size-2);
+        tail = secondLast;
+        tail.next = null;
+        size--;
+    }
+    public Node get (int index){
+        Node node = head;
+        for(int i=0;i<index;i++){
+            node = node.next;
+        }
+        return node;
+    }
+    
+    public void display(){
+        Node temp = head;
+        while(temp != null){
+            System.out.print(temp.val + "->");
+            temp=temp.next;
+        }
+        System.out.print("END");
+    }
+//------------------------------------------------------------------------------//
+
+    
+    public void removeDulpicates(){//removing Dulpicates from a sorted array 
+        Node cur = head;
+        
+        while(cur.next != null){
+            if(cur.val == cur.next.val){
+                cur.next = cur.next.next;
+                size--;
+            }else{
+                cur=cur.next;
+            }
+        }
+    }
+    
+    
+    public static void merge(LL first , LL sec){
+        Node f = first.head;
+        Node s = sec.head;
+        
+        LL ans = new LL();
+        
+        while(f != null && s != null){
+            if(f.val > s.val){
+                ans.last(f.val);
+                f=f.next;
+            }else{
+                ans.last(s.val);
+                s=s.next;                
+            }
+        }
+        while(f != null){
+            ans.last(f.val);
+            f=f.next;
+        }
+        while(s != null){
+            ans.last(s.val);
+            s=s.next;
+        }
+        ans.display();
+    }
+    
+    public boolean detectCycle(){ //Detecting a Cycle in a Linked list 
+        Node fast=head;
+        Node slow=head;
+        
+        while(fast != null && fast.next != null){
+            fast=fast.next.next;
+            slow=slow.next;
+            
+            if(fast== slow){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public int lengthofcycle(){ //find the length of the cycle in the linked list
+        Node fast=head;
+        Node slow=head;
+        
+        while(fast != null && fast.next != null){
+            fast = fast.next.next;
+            slow = slow.next;
+            
+            if(fast == slow){
+                Node temp = slow;
+                int len = 0;
+                do{
+                    temp = temp.next;
+                    len++;
+                }while(temp != slow);
+                return len;
+            }
+        }
+        return 0;
+    }
+    
+    public Node detectCycle(){
+        int len=0;
+        Node fast = head;
+        Node slow = head;
+        
+        while(fast != null && fast.next != null){
+            fast=fast.next.next;
+            slow=slow.next;
+            if(fast == slow){
+                length=lengthofcycle(slow);
+                break;
+            }
+        }
+        if(length = 0) return null;
+        
+        Node f = head;
+        Node s = head;
+        
+        while(length >0){
+            s=s.next;
+            length--;
+        }
+        while(f != s){
+            f=f.next;
+            s=s.next;
+        }
+        return s;
+    }
+    
+    
+    public static void main(String args []){
+        LL list1 = new LL();
+        list1.last(1);
+        list1.last(2);
+        list1.last(4);
+        list1.display();
+
+        
+    }
+}
