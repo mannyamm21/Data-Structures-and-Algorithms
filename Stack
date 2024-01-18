@@ -1,0 +1,139 @@
+//Stack using Arrays
+public class MyStack{
+    int top;
+    int arr[] = new int[1000];
+    
+    MyStack(){
+        top =-1;
+    }
+    
+    void push (int a){
+        if(top == arr.length-1){
+            return;
+        }
+        top++;
+        arr[top] = a;
+    }
+    
+    int pop(){
+        if(top==1){
+            return -1;
+        }
+        int res = arr[top];
+        top--;
+        return res;
+    }
+    
+    int peek(){
+        if(top == -1){
+            return -1;
+        }
+        return arr[top];
+    }
+    
+    boolean isEmpty(){
+        return top ==-1;
+    }
+    
+    public static void main(String arg[]){
+        MyStack stack = new MyStack();
+        stack.push(5);
+        stack.push(4);
+        stack.push(9);
+        stack.push(4);
+        stack.push(7);
+        stack.pop();
+        stack.pop();
+        System.out.print(stack.peek());
+    }
+}
+-----------------------------------------------------
+//Stack using LinkedList
+public class MyStackList{
+    private class Node {
+        private int data;
+        private Node next;
+
+        public Node(int data) {
+            this.data = data;
+        }
+    
+        public Node(int data, Node next) {
+            this.data = data;
+            this.next = next;
+        }
+    }
+    Node top;
+    
+    void push(int a){
+        Node temp = new Node(a);
+        temp.next=top;
+        top = temp;
+    }
+    
+    int pop(){
+        if(top == null)return -1;
+        int res = top.data;
+        top = top.next;
+        return res;
+    }
+    
+    int peek(){
+        if(top == null) return -1;
+        return top.data;
+    }
+    
+    boolean isEmpty(){
+        return top==null;
+    }
+    
+    public static void main(String arg[]){
+        MyStackList stack = new MyStackList();
+        stack.push(5);
+        stack.push(4);
+        stack.push(9);
+        stack.push(4);
+        stack.push(7);
+        stack.pop();
+        stack.pop();
+        System.out.print(stack.peek());
+    }
+}
+------------------------------------------------
+//Stack using Queues
+public class StackQueue {
+    Queue<Integer> q1 = new LinkedList<>();
+    Queue<Integer> q2 = new LinkedList<>();
+
+    public void push(int x){
+        q2.add(x);
+        while(!q1.isEmpty()){
+            q2.add(q1.remove());
+        }
+        Queue<Integer> temp = q1;
+        q1=q2;
+        q2=temp;
+    }
+
+    public int pop(){
+        return q1.remove();
+    }
+
+    public int top(){
+        return q1.peek();
+    }
+
+    public boolean isEmpty(){
+        return q1.size()==0;
+    }
+
+    public static void main(String[] args) {
+        StackQueue stackQueue = new StackQueue();
+        stackQueue.push(5);
+        stackQueue.push(6);
+        stackQueue.push(8);
+        stackQueue.push(4);
+        stackQueue.pop();
+        System.out.println(stackQueue.top());
+    }
+}
